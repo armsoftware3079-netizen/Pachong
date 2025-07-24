@@ -1,0 +1,116 @@
+爬虫工具使用说明
+版本：1.0
+最后更新：2025年7月24日
+1. 概述
+感谢您使用本爬虫工具。本工具旨在帮助用户快速、方便地抓取网页数据。无论是需要抓取静态网页，还是动态加载内容，本工具都能高效地获取网页信息，并根据用户需求保存数据。
+2. 运行前置条件
+在使用本爬虫工具之前，用户需要进行以下配置和准备工作：
+2.1 安装 Python 3.7 或更高版本
+本工具基于 Python 编写，确保您安装了 Python 3.7 或更高版本。可以从 Python 官网下载并安装：
+https://www.python.org/downloads/
+安装后，请在命令行中运行以下命令来确认 Python 是否成功安装：
+python --version
+如果系统返回类似于 Python 3.x.x 的版本号，说明 Python 安装成功。
+2.2 安装依赖包
+爬虫工具需要一些外部库来执行数据抓取。您需要使用 pip 安装所需的依赖。确保您已经激活了虚拟环境（如果使用虚拟环境）。
+创建虚拟环境（如果尚未创建）：
+python -m venv venv
+激活虚拟环境：
+Windows：.\venv\Scripts\activate
+MacOS/Linux:source venv/bin/activate
+安装依赖：
+在终端（命令提示符）中运行以下命令来安装所需的库：
+pip install -r requirements.txt
+这将安装包括爬虫工具所需的库（如 requests、Scrapy、BeautifulSoup 等）。
+2.3 配置代理（可选）
+如果您在抓取某些网站时遇到 IP 被封锁的情况，可以通过配置代理来避免这种问题。
+设置代理：在配置文件 config.py 中设置代理服务器：
+PROXY = "http://your_proxy_address"
+2.4 准备要抓取的网址
+爬虫工具可以抓取指定网站的页面。在使用之前，您需要准备好要抓取的目标 URL。
+确保您了解目标网站的 robots.txt 文件内容，遵守网站的爬虫规则和限制，以避免违反网站的服务条款。
+2.5 配置请求头和延时（可选）
+为了避免被网站封锁，您可以设置请求头和请求间隔延时，以模拟人类用户行为。您可以在配置文件中设置以下参数：
+请求头（User-Agent）：模拟浏览器请求，防止被识别为爬虫。
+USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+请求延时：通过设置请求延时，避免过于频繁地请求网站。
+DOWNLOAD_DELAY = 1  # 请求延时，单位为秒
+3. 工具功能
+本爬虫工具提供以下主要功能：
+爬取静态网页：抓取静态网页的数据并保存为 .html 文件。
+爬取动态网页：通过模拟浏览器，抓取由 JavaScript 渲染的动态网页内容。
+数据保存：爬取的数据可以保存为 .html、.json、.csv 等格式。
+请求延时：可以配置请求之间的延迟，避免频繁请求被目标网站封锁。
+自动处理请求头：自动添加常见的 User-Agent，防止被识别为爬虫。
+4. 使用步骤
+4.1 启动工具
+打开终端（macOS/Linux）或命令提示符（Windows）。
+进入到爬虫工具所在目录，运行以下命令启动爬虫工具：
+python your_script.py
+或者在 Windows 上，直接点击 web_scraper.exe 启动工具。
+4.2 输入网站 URL
+启动后，您将看到爬虫工具提示您输入网站的 URL。例如：
+请输入需要抓取的网址（例如：http://example.com）：
+输入您希望爬取的网页 URL 并按下回车。
+4.3 选择数据保存格式
+您可以选择将爬取的数据保存为不同的格式：
+HTML 格式：保存为网页源代码，适用于抓取完整的网页内容。
+JSON 格式：适用于抓取结构化数据。
+CSV 格式：适用于需要保存表格数据的场景。
+例如，输入以下命令来保存数据为 JSON 格式：
+请选择保存格式：
+1. HTML
+2. JSON
+3. CSV
+请输入您的选择（1/2/3）：
+4.4 开始爬取
+在选择数据格式后，工具会开始自动爬取网页，您将看到以下信息：
+正在爬取： http://example.com
+正在保存为： webpage_source.html
+爬取完成，保存成功！
+工具会显示爬取的进度，并最终保存结果到指定的文件中。
+4.5 查看保存的文件
+爬取完成后，您可以在工具所在的文件夹中找到保存的数据文件。例如，保存为 webpage_source.html、output.json 或 output.csv。
+5. 高级功能
+5.1 设置请求延时
+为了防止过于频繁的请求，您可以在爬虫工具的配置文件中设置请求延时。默认情况下，工具会在每次请求之间延时 1 秒。
+通过配置文件调整延时：
+DOWNLOAD_DELAY = 1  # 请求延时，单位为秒
+5.2 使用代理
+如果目标网站限制了 IP 请求频率，您可以通过配置代理来绕过这些限制。
+在配置文件中设置代理：
+PROXY = "http://your_proxy_address"
+5.3 处理分页
+如果目标网站有分页，您可以配置爬虫工具自动抓取所有页面：
+def parse(self, response):
+    # 处理当前页面的数据
+    # 提取下一页的链接并继续爬取
+    next_page = response.css('a.next::attr(href)').get()
+    if next_page:
+        yield response.follow(next_page, self.parse)
+5.4 自动登录和表单提交
+对于需要登录的网站，您可以使用爬虫工具自动填充并提交登录表单。
+def start_requests(self):
+    url = 'http://example.com/login'
+    formdata = {
+        'username': 'your_username',
+        'password': 'your_password'
+    }
+    yield scrapy.FormRequest(url, formdata=formdata, callback=self.after_login)
+
+def after_login(self, response):
+    # 登录后的页面处理
+    pass
+6. 常见问题
+6.1 如何解决网站封锁问题？
+如果您的 IP 被目标网站封锁，可以使用代理池或 VPN 来绕过封锁。您可以设置代理配置来隐藏真实的 IP 地址。
+6.2 如何避免频繁请求被封锁？
+通过设置请求延时，模拟人类行为，避免短时间内发送大量请求导致网站封锁。
+6.3 爬取大规模数据时如何存储？
+对于大规模的数据，建议使用数据库存储（如 MySQL、MongoDB）。您可以在爬虫工具中配置数据存储管道，将数据保存到数据库中。
+7. 更新与支持
+更新：如果本工具有更新，您可以在网论帖子或 GitHub 页面获取最新版本。
+支持：如果在使用过程中遇到问题，请通过电子邮件联系我们的技术支持团队：[Armsoftware3079@gmail.com]。
+8. 免责声明
+本工具仅供合法的数据抓取使用。用户必须遵守相关法律法规，不得用于非法用途。我方对因使用本工具造成的任何损失或法律责任不承担任何责任。
+
