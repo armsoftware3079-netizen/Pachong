@@ -1,114 +1,73 @@
-# 🕷️ Spider Tool v1.0.1
+# 🕷️ Spider Tool v1.1.1
 
-**多功能图形化爬虫工具**  
-支持网页、软件和小程序源代码提取，并具备智能识别、日志记录、美化界面及自动保存功能。
+**Spider Tool** 是一款跨平台的图形化爬虫工具，适用于网站源码获取、软件和小程序源码提取，具备智能化结构解析、OCR验证码识别、多线程与队列调度功能，并支持自定义界面风格与字体。
 
 ---
 
-## 📦 目录结构
+## ✨ 主要特性
+
+| 功能 | 描述 |
+|------|------|
+| 🌐 网页爬取 | 支持静态网页和结构自动分析，支持输入 Cookie |
+| 📦 软件/小程序上传 | 自动识别源代码并打包输出 |
+| 🧠 多线程 + 队列爬虫 | 高效稳定的并发任务管理 |
+| 🧩 CAPTCHA 识别 | 集成 OCR 模块 `pytesseract` |
+| 🎨 界面可定制 | 提供多种 UI 风格与字体切换（实时生效） |
+| 🌍 国际化支持 | 默认中文，可扩展英文界面（预留） |
+| 📜 日志记录 | 控制台输出调试日志，可选切换 |
+| 📁 输出管理 | 所有爬取结果自动保存至 `output/` 文件夹 |
+
+---
+
+## 📁 项目结构
 
 ```
-python-crawler/
-├── spider.py              # 主程序 (GUI + 智能爬虫 + 日志)
-├── requirements.txt       # 所需依赖库
-├── installer.nsi          # NSIS 安装脚本
-├── dist/spider.exe        # 可执行文件（可选）
-├── output/                # 爬取输出目录
-├── logs/spider.log        # 日志文件
-└── README.md              # 本文档
+spider_tool_v1.1.1/
+├── spider.py          # 主程序 (GUI + 核心逻辑)
+├── spider_ui.py       # UI 风格与字体设置模块
+├── spider_ocr.py      # OCR 验证码识别模块
+├── requirements.txt   # Python依赖包
+├── README.md          # 本说明文件
+├── version_log.md     # 版本更新日志
+├── installer.nsi      # NSIS 安装脚本（可选）
+├── dist/spider.exe    # 可选打包后的可执行文件
+└── output/            # 爬取结果输出目录
 ```
 
 ---
 
-## ✨ 功能亮点
-
-### 🎨 图形化界面（Tkinter 美化）
-- 扁平化设计、彩色按钮风格
-- 状态栏实时提示
-- 界面简洁明快、支持中文字体
-
-### 🌐 智能网页爬取
-- 优先尝试静态爬虫（requests + bs4）
-- 若失败，自动切换动态爬虫（Selenium）
-- 可爬取 `GitHub.com`, `ChatGPT.com`, `.cn` 网站等复杂目标
-
-### 💻 软件/小程序源代码上传识别
-- 识别上传文件后缀
-- 自动保存为 `.cpp`, `.py`, `.zip` 等格式
-- 文件输出路径统一保存在 `output/`
-
-### 📜 日志记录功能
-- 操作日志自动写入 `logs/spider.log`
-- 包含请求成功/失败、错误堆栈等内容
-- 便于长期维护和排错
-
----
-
-## 🚀 使用说明
-
-### ✅ 安装依赖
+## 🧰 安装依赖
 
 ```bash
 pip install -r requirements.txt
 ```
 
-或使用虚拟环境：
+> ⚠️ 本工具需要 Tesseract OCR，请手动下载安装：
+> https://github.com/tesseract-ocr/tesseract  
+> 并添加到系统环境变量中。
 
-```bash
-python -m venv venv
-venv\Scripts\activate
-pip install -r requirements.txt
-```
+---
 
-### ▶️ 运行程序
+## 🚀 使用方法
 
 ```bash
 python spider.py
 ```
 
-> 推荐使用 Python 3.9+，需预装 Chrome 浏览器与对应版本 ChromeDriver。
+或在 Windows 上双击运行 `spider.exe`（若已打包）。
 
 ---
 
-## 🔐 安全说明
+## 📦 打包成安装程序（可选）
 
-- 工具仅用于**合法授权的内容爬取**
-- 请勿用于侵犯知识产权的网站或平台
-- 若目标站点使用防爬措施（如 Cloudflare），需配置代理或模拟登录
+使用 `NSIS` 工具打开 `installer.nsi` 脚本即可生成 `.exe` 安装包。
 
 ---
 
-## 📜 更新日志 v1.0.1
+## 📘 许可证
 
-- [x] UI 美化，增加图标、颜色、状态提示
-- [x] 智能判断网页爬虫策略（静态 / 动态）
-- [x] 支持上传并保存源码、自动识别格式
-- [x] 日志记录完善，错误跟踪清晰
-- [x] 所有输出统一保存至 output/ 文件夹
+本项目遵循 MIT License 开源协议，欢迎自由使用与修改。
 
 ---
 
-## 📦 安装包生成（可选）
-
-1. 安装 pyinstaller：
-
-```bash
-pip install pyinstaller
-pyinstaller --onefile --windowed spider.py
-```
-
-2. 编写并使用 NSIS 安装脚本（installer.nsi）
-
-3. 欢迎大家把自己修改的文件所生成的安装包投稿，谢谢！
-
----
-
-## 📬 联系作者
-
-如需自定义版本、添加功能或商业授权，请联系：
-
-📧 Email: [Armsoftware3079@gmail.com](mailto:Armsoftware3079@gmail.com)
-
----
-
-© 2025 Spider Tool 开发组 | 仅供学习与研究使用
+© 2025 SpiderSoft | Version: **v1.1.1**
