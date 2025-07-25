@@ -64,6 +64,14 @@ python spider.py
 
 ---
 
+## ❓ 常见问题解答
+问题一:究竟哪一个是主程序？  
+答:Spider.py。  
+问题二:我发现了许多的Bug，怎么提交至开发者的手中？  
+答:欢迎投稿到:Armsoftware3079@gmail.com  
+
+---
+
 ## 📘 许可证
 
 本项目遵循 MIT License 开源协议，欢迎自由使用与修改。
